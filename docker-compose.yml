@@ -1,0 +1,53 @@
+version: '3.2'
+services:
+
+# SCAP DB POSTGRES
+#  scaidb:
+#    image: "postgres:10.2-alpine"
+#    container_name: scaidb
+#    volumes:
+#      - scai-data:/var/lib/pgsql/10.2/data
+#    ports:
+#      - 5432:5432
+#    environment:
+#      - POSTGRES_DB:scaidb
+#      - POSTGRES_USER:postgres
+#      - POSTGRES_PASSWORD:XXXXXXX
+#    networks:
+#      - backend      
+
+#SCAP API JAVA JDK17
+  scapapi:
+    build: ./
+    container_name: scaiapi
+    image: scap:1.0.0-release
+    environment: 
+      - DB_SERVER=scaidb
+    ports: 
+      - 8080:8080
+#    depends_on:
+#      - scaidb
+        #links:
+        #- scaidb
+    networks:
+      - backend
+#      - frontend
+
+# SCAI WEB ANGULAR
+#  scaiweb:
+#    build: ./scaiweb
+#    ports:
+#      - 4200:80
+#    depends_on:
+#      - scaiapi
+#    networks:
+#      - frontend        
+#        #links:
+        #- scaiapi
+
+#volumes:
+#  scai-data:
+
+networks:
+  backend:
+#  frontend:
